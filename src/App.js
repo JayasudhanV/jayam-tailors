@@ -28,40 +28,34 @@ function LoadingScreen({ onFinish }) {
 
 /* ================= MAIN APP ================= */
 export default function App() {
-  
- const servicesRef = useRef(null);
-  const [loading, setLoading] = useState(true);
-  
-  const [index, setIndex] = useState(0);
-    const [showNavbar, setShowNavbar] = useState(true);
-  const lastScrollY = useRef(0);
+  const slides = [
+    {
+      image: "/hero/slide1.jpg",
+      small: "Welcome to Jayam Tailors",
+      title: "CREATE YOUR OWN PERSONAL STYLE",
+    },
+    {
+      image: "/hero/slide2.avif",
+      small: "Welcome to Jayam Tailor",
+      title: "OUR PERSONAL QUALITY TAILOR",
+    },
+  ];
 
-  
-  useEffect(() => {
+  const [loading, setLoading] = useState(true);
+  const [index, setIndex] = useState(0);
+ const servicesRef = useRef(null);
+ useEffect(() => {
   const interval = setInterval(() => {
     setIndex((prev) => (prev + 1) % slides.length);
-  }, 5000); // 👈 change slide every 5 seconds
+  }, 5000);
 
   return () => clearInterval(interval);
-}, []);
-useEffect(() => {
-  const handleScroll = () => {
-    const currentScrollY = window.scrollY;
+}, [slides.length]);
 
-    if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-      // scrolling DOWN → hide navbar
-      setShowNavbar(false);
-    } else {
-      // scrolling UP → show navbar
-      setShowNavbar(true);
-    }
+  
 
-    lastScrollY.current = currentScrollY;
-  };
+  
 
-  window.addEventListener("scroll", handleScroll);
-  return () => window.removeEventListener("scroll", handleScroll);
-}, []);
 
 const isDown = useRef(false);
 const startX = useRef(0);
@@ -90,19 +84,7 @@ const onMouseMove = (e) => {
 };
 
 
-  const slides = [
-    {
-      image: "/hero/slide1.jpg",
-      small: "Welcome to Jayam Tailors",
-      title: "CREATE YOUR OWN PERSONAL STYLE",
-    },
-    {
-      image: "/hero/slide2.avif",
-      small: "Welcome to Jayam Tailor",
-      title: "OUR PERSONAL QUALITY TAILOR",
-    },
-  ];
-
+ 
   const next = () => setIndex((index + 1) % slides.length);
   const prev = () => setIndex((index - 1 + slides.length) % slides.length);
 
